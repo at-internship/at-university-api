@@ -72,6 +72,35 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			
+			<plugin>
+				<groupId>io.swagger</groupId>
+				<artifactId>swagger-codegen-maven-plugin</artifactId>	
+				<version>${version.swagger.codegen}</version>
+				<configuration>
+					<inputSpec>${yaml.file}</inputSpec>
+					<configOptions>
+						<sourceFolder>${generated-sources-java-path}</sourceFolder>
+					</configOptions>
+					<output>${generated-sources-path}</output>
+				</configuration>
+				<executions>
+					<execution>
+						<id>generate-swagger-spring</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<language>spring</language>
+							<modelPackage>${project.groupId}.swagger.model</modelPackage>
+							<apiPackage>${project.groupId}.swagger.api</apiPackage>
+							<invokerPackage>${project.groupId}.swagger.invoker</invokerPackage>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
 		</plugins>
 	</build>
 
