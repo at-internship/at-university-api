@@ -35,24 +35,6 @@
 		</dependency>
 		
 		<dependency>
-		    <groupId>io.springfox</groupId>
-		    <artifactId>springfox-swagger2</artifactId>
-		    <version>2.9.2</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>io.springfox</groupId>
-		    <artifactId>springfox-boot-starter</artifactId>
-		    <version>3.0.0</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>io.springfox</groupId>
-		    <artifactId>springfox-swagger-ui</artifactId>
-		    <version>2.9.2</version>
-		</dependency>
-		
-		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.12</version>
@@ -79,53 +61,6 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			
-			<plugin>
-			    <groupId>io.swagger</groupId>
-			    <artifactId>swagger-codegen-maven-plugin</artifactId>
-			    <version>2.3.1</version>
-			    <executions>
-				<execution>
-				    <goals>
-					<goal>generate</goal>
-				    </goals>
-				    <configuration>
-					<inputSpec>${project.basedir}/src/main/resources/api.yaml</inputSpec>
-					<language>java</language>
-					<configOptions>
-					   <sourceFolder>src/gen/java/main</sourceFolder>
-					</configOptions>
-				    </configuration>
-				</execution>
-			    </executions>
-			</plugin>
-			
-			<plugin>
-				<groupId>io.swagger</groupId>
-				<artifactId>swagger-codegen-maven-plugin</artifactId>	
-				<version>${version.swagger.codegen}</version>
-				<configuration>
-					<inputSpec>${yaml.file}</inputSpec>
-					<configOptions>
-						<sourceFolder>${generated-sources-java-path}</sourceFolder>
-					</configOptions>
-					<output>${generated-sources-path}</output>
-				</configuration>
-				<executions>
-					<execution>
-						<id>generate-swagger-spring</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-						<configuration>
-							<language>spring</language>
-							<modelPackage>${project.groupId}.swagger.model</modelPackage>
-							<apiPackage>${project.groupId}.swagger.api</apiPackage>
-							<invokerPackage>${project.groupId}.swagger.invoker</invokerPackage>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 			
 		</plugins>
 	</build>
