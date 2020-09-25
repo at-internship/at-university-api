@@ -19,10 +19,5 @@ public class UniversityController {
 		log.info("Calling Get Operation");
 		return "Hello at-university-api";
 	}
-	
-	@Configuration
-	@EnableSwagger2WebMvc
-	public class SpringFoxConfig {                                    
-	}
 
 }
