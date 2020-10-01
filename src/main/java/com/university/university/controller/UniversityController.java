@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import lombok.extern.slf4j.Slf4j;
 
-@RequestMapping(value = "/api/v1/course")
+@RequestMapping(value = "/api/v1")
 @RestController
 @Slf4j
 public class UniversityController {
@@ -29,7 +29,7 @@ public class UniversityController {
 		return "Hello at-university-api";
 	}
 
-	@PostMapping()
+	@PostMapping(value ="/course")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<CreateCourseResponse> postCourses(@RequestBody CreateCourseRequest request){
 		CreateCourseResponse response=service.createCourse(request);
