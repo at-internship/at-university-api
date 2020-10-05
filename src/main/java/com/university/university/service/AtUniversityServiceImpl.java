@@ -17,10 +17,8 @@ public class AtUniversityServiceImpl implements AtUniversityService{
 
     @Override
     public List<Course> getCourses() {
-        List<Course> courses = new ArrayList<>();
 
-        courses = courseRepository.findAll();
-        return courses;
+        return courseRepository.findAll();
     }
 
 }
