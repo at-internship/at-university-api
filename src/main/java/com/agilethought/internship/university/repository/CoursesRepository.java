@@ -1,6 +1,6 @@
-package com.university.university.repository;
+package com.agilethought.internship.university.repository;
 
-import com.university.university.model.Course;
+import com.agilethought.internship.university.model.Course;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.university.university.service.common;
+package com.agilethought.internship.university.service.common;
 
 public enum CategoryConstants {
     JAVA(1),

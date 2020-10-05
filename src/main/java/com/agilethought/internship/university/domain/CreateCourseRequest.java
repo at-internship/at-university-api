@@ -1,4 +1,4 @@
-package com.university.university.domain;
+package com.agilethought.internship.university.domain;
 
 import lombok.Getter;
 import lombok.Setter;

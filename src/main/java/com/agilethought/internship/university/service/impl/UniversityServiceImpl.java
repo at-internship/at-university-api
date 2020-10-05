@@ -1,14 +1,16 @@
-package com.university.university.service.impl;
+package com.agilethought.internship.university.service.impl;
 
-import com.university.university.domain.CreateCourseRequest;
-import com.university.university.domain.CreateCourseResponse;
-import com.university.university.model.Course;
-import com.university.university.repository.CoursesRepository;
-import com.university.university.service.UniversityService;
-import com.university.university.service.common.CategoryConstants;
+import com.agilethought.internship.university.domain.CreateCourseRequest;
+import com.agilethought.internship.university.domain.CreateCourseResponse;
+import com.agilethought.internship.university.model.Course;
+import com.agilethought.internship.university.repository.CoursesRepository;
+import com.agilethought.internship.university.service.UniversityService;
+import com.agilethought.internship.university.service.common.CategoryConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -38,6 +40,12 @@ public class UniversityServiceImpl implements UniversityService {
         course.setImg(request.getImg());
         course.setStatus(request.getStatus());
         return course;
+    }
+
+
+    public List<Course> getCourses() {
+
+        return repository.findAll();
     }
 
 }

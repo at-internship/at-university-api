@@ -1,4 +1,4 @@
-package com.university.university.model;
+package com.agilethought.internship.university.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +18,7 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public ObjectId _id;
+    public String _id;
     private int category;
     private String title;
     private String description;

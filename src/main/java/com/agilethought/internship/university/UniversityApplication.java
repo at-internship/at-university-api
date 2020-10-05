@@ -1,4 +1,4 @@
-package com.university.university;
+package com.agilethought.internship.university;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
