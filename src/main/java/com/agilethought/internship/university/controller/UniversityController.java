@@ -24,7 +24,7 @@ public class UniversityController {
 		this.service=service;
 	}
 
-	@GetMapping(value = "/get")
+	@GetMapping(value = "/course")
 	@ResponseStatus(HttpStatus.OK)
 	public List getOperation() {
 		log.info("Calling Get Operation");
