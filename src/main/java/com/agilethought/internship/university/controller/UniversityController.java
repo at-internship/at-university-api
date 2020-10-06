@@ -36,6 +36,7 @@ public class UniversityController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<CreateCourseResponse> postCourses(
 			@ApiParam(value = "Post course request", required = true) @RequestBody CreateCourseRequest request){
+		log.info("UniversityController.postCourses - operation request {}", request);
 		CreateCourseResponse response=service.createCourse(request);
 		log.info("UniversityController.postCourses - operation response {}", response);
 		return new ResponseEntity<>(response,HttpStatus.CREATED);
