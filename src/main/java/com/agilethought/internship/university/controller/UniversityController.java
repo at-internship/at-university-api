@@ -34,7 +34,9 @@ public class UniversityController {
 	@PostMapping(value ="/course")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<CreateCourseResponse> postCourses(@RequestBody CreateCourseRequest request){
+		log.info("UniversityController.postCourses - operation request {}", request);
 		CreateCourseResponse response=service.createCourse(request);
+		log.info("UniversityController.postCourses - operation response {}", response);
 		return new ResponseEntity<>(response,HttpStatus.CREATED);
 	}
 }
