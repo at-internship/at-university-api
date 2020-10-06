@@ -20,7 +20,7 @@ public class UniversityServiceImpl implements UniversityService {
 
     @Autowired
     public UniversityServiceImpl(CoursesRepository repository){
-        this.repository=repository;
+        this.repository = repository;
     }
 
     @Override
@@ -28,6 +28,7 @@ public class UniversityServiceImpl implements UniversityService {
         CreateCourseResponse response = new CreateCourseResponse();
         Course course = this.requestToCourse(request);
         repository.save(course);
+        log.info("Course saved with id: {}", course.get_id());
         response.setId(course.get_id().toString());
         return response;
     }
@@ -35,6 +36,7 @@ public class UniversityServiceImpl implements UniversityService {
     private Course requestToCourse(CreateCourseRequest request){
         Course course = new Course();
         course.setCategory(CategoryConstants.valueOf(request.getCategory().toUpperCase()).getOrd());
+        log.info("Category conversion successful");
         course.setTitle(request.getTitle());
         course.setDescription(request.getDescription());
         course.setImg(request.getImg());
