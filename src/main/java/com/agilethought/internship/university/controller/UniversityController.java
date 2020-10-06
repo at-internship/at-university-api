@@ -3,6 +3,7 @@ package com.agilethought.internship.university.controller;
 import com.agilethought.internship.university.domain.CreateCourseRequest;
 import com.agilethought.internship.university.domain.CreateCourseResponse;
 import com.agilethought.internship.university.service.UniversityService;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,8 @@ public class UniversityController {
 
 	@PostMapping(value ="/course")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<CreateCourseResponse> postCourses(@RequestBody CreateCourseRequest request){
+	public ResponseEntity<CreateCourseResponse> postCourses(
+			@ApiParam(value = "Post course request", required = true) @RequestBody CreateCourseRequest request){
 		CreateCourseResponse response=service.createCourse(request);
 		return new ResponseEntity<>(response,HttpStatus.CREATED);
 	}
