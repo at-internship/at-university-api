@@ -1,5 +1,6 @@
 package com.agilethought.internship.university.controller;
 
+import com.agilethought.internship.university.domain.CourseResponse;
 import com.agilethought.internship.university.domain.CreateCourseRequest;
 import com.agilethought.internship.university.domain.CreateCourseResponse;
 import com.agilethought.internship.university.service.UniversityService;
@@ -27,7 +28,7 @@ public class UniversityController {
 
 	@GetMapping(value = "/course")
 	@ResponseStatus(HttpStatus.OK)
-	public List getOperation() {
+	public List<CourseResponse> getOperation() {
 		log.info("Calling Get Operation");
 		return service.getCourses();
 	}
