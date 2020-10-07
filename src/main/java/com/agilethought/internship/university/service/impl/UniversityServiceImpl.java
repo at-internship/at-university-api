@@ -54,13 +54,14 @@ public class UniversityServiceImpl implements UniversityService {
             CourseResponse changed = new CourseResponse();
 
             changed.set_id(c.get_id());
-            int indicator = c.getCategory();
-            if(indicator == 1)
+            if(c.getCategory() == 1)
                 changed.setCategory("JAVA");
-            else if(indicator == 2)
+            else if(c.getCategory() == 2)
                 changed.setCategory("PEGA");
-            else
+            else if(c.getCategory() == 3)
                 changed.setCategory("JS");
+            else
+                changed.setCategory("UNKNOWN");
             changed.setTitle(c.getTitle());
             changed.setDescription(c.getDescription());
             changed.setImg(c.getImg());
