@@ -42,13 +42,13 @@ public class UniversityController {
 	}
 
 	@PutMapping(value = "/course/{id}")
-    @ResponseStatus (HttpStatus.OK)
-    public ResponseEntity<UpdateCourseResponse> putOperation(
-    		@RequestBody UpdateCourseRequest request, @PathVariable String id) {
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<UpdateCourseResponse> putOperation(
+			@RequestBody UpdateCourseRequest request, @PathVariable String id) {
 		log.info("Calling Put operation request {}", request);
-	    UpdateCourseResponse response = service.Updatecourse(request, id);
+		UpdateCourseResponse response = service.Updatecourse(request, id);
 		log.info("Calling Put operation response {}", response);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
 
 }
