@@ -1,18 +1,17 @@
 package com.agilethought.internship.university.service.impl;
 
-import com.agilethought.internship.university.domain.CreateCourseRequest;
-import com.agilethought.internship.university.domain.CreateCourseResponse;
+import com.agilethought.internship.university.domain.*;
 import com.agilethought.internship.university.model.Course;
 import com.agilethought.internship.university.repository.CoursesRepository;
 import com.agilethought.internship.university.service.UniversityService;
 import com.agilethought.internship.university.service.common.CategoryConstants;
-import com.agilethought.internship.university.domain.CourseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -74,5 +73,60 @@ public class UniversityServiceImpl implements UniversityService {
 
         return newList;
     }
+
+    public UpdateCourseResponse Updatecourse(UpdateCourseRequest request, String courseid) {
+
+        UpdateCourseResponse response = new UpdateCourseResponse();
+        Optional<Course> existcourse = repository.findById(courseid);
+
+        if (existcourse != null) {
+            Course newcourse = requestToUpdate(request, existcourse.get());
+            repository.save(newcourse);
+            if(newcourse.getCategory() == 1)
+                response.setCategory("JAVA");
+            else if(newcourse.getCategory() == 2)
+                response.setCategory("PEGA");
+            else if(newcourse.getCategory() == 3)
+                response.setCategory("JS");
+            response.setTitle(newcourse.getTitle());
+            response.setDescription(newcourse.getDescription());
+            response.setImg(newcourse.getImg());
+            response.setStatus(newcourse.getStatus());
+        }
+
+        return response;
+    }
+
+    private Course requestToUpdate(UpdateCourseRequest request, Course savecourse){
+        log.info("Category conversion successful");
+
+        if (request.getCategory() != null && !request.getCategory().isEmpty())
+            savecourse.setCategory(CategoryConstants.valueOf(request.getCategory().toUpperCase()).getOrd());
+        else if (request.getCategory() != null && request.getCategory().isEmpty())
+            savecourse.setCategory(0);
+
+        if (request.getImg() != null)
+            savecourse.setImg(request.getImg());
+        else if (request.getImg() != null && request.getImg().isEmpty())
+            savecourse.setImg(null);
+
+        if (request.getTitle() != null)
+            savecourse.setTitle(request.getTitle());
+        else if (request.getTitle() != null && request.getTitle().isEmpty())
+            savecourse.setTitle(null);
+
+        if (request.getDescription() != null)
+            savecourse.setDescription(request.getDescription());
+        else if (request.getDescription() != null && request.getDescription().isEmpty())
+            savecourse.setDescription(null);
+
+        if (request.getStatus() != 0)
+            savecourse.setStatus(request.getStatus());
+        else
+            savecourse.setStatus(0);
+
+        return savecourse;
+    }
+
 
 }

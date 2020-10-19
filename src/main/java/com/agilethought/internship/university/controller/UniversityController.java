@@ -1,8 +1,6 @@
 package com.agilethought.internship.university.controller;
 
-import com.agilethought.internship.university.domain.CourseResponse;
-import com.agilethought.internship.university.domain.CreateCourseRequest;
-import com.agilethought.internship.university.domain.CreateCourseResponse;
+import com.agilethought.internship.university.domain.*;
 import com.agilethought.internship.university.service.UniversityService;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,4 +40,15 @@ public class UniversityController {
 		log.info("UniversityController.postCourses - operation response {}", response);
 		return new ResponseEntity<>(response,HttpStatus.CREATED);
 	}
+
+	@PutMapping(value = "/course/{id}")
+    @ResponseStatus (HttpStatus.OK)
+    public ResponseEntity<UpdateCourseResponse> putOperation(
+    		@RequestBody UpdateCourseRequest request, @PathVariable String id) {
+		log.info("Calling Put operation request {}", request);
+	    UpdateCourseResponse response = service.Updatecourse(request, id);
+		log.info("Calling Put operation response {}", response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 }
