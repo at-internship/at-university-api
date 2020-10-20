@@ -74,58 +74,58 @@ public class UniversityServiceImpl implements UniversityService {
         return newList;
     }
 
-    public UpdateCourseResponse Updatecourse(UpdateCourseRequest request, String courseid) {
+    public UpdateCourseResponse updateCourse(UpdateCourseRequest request, String courseid) {
 
         UpdateCourseResponse response = new UpdateCourseResponse();
-        Optional<Course> existcourse = repository.findById(courseid);
+        Optional<Course> existCourse = repository.findById(courseid);
 
-        if (existcourse != null) {
-            Course newcourse = requestToUpdate(request, existcourse.get());
-            repository.save(newcourse);
-            if(newcourse.getCategory() == 1)
+        if (existCourse != null) {
+            Course newCourse = requestToUpdate(request, existCourse.get());
+            repository.save(newCourse);
+            if(newCourse.getCategory() == 1)
                 response.setCategory("JAVA");
-            else if(newcourse.getCategory() == 2)
+            else if(newCourse.getCategory() == 2)
                 response.setCategory("PEGA");
-            else if(newcourse.getCategory() == 3)
+            else if(newCourse.getCategory() == 3)
                 response.setCategory("JS");
-            response.setTitle(newcourse.getTitle());
-            response.setDescription(newcourse.getDescription());
-            response.setImg(newcourse.getImg());
-            response.setStatus(newcourse.getStatus());
+            response.setTitle(newCourse.getTitle());
+            response.setDescription(newCourse.getDescription());
+            response.setImg(newCourse.getImg());
+            response.setStatus(newCourse.getStatus());
         }
 
         return response;
     }
 
-    private Course requestToUpdate(UpdateCourseRequest request, Course savecourse){
-        log.info("Category conversion successful");
+    private Course requestToUpdate(UpdateCourseRequest request, Course saveCourse){
 
         if (request.getCategory() != null && !request.getCategory().isEmpty())
-            savecourse.setCategory(CategoryConstants.valueOf(request.getCategory().toUpperCase()).getOrd());
+            saveCourse.setCategory(CategoryConstants.valueOf(request.getCategory().toUpperCase()).getOrd());
         else if (request.getCategory() != null && request.getCategory().isEmpty())
-            savecourse.setCategory(0);
+            saveCourse.setCategory(0);
 
         if (request.getImg() != null)
-            savecourse.setImg(request.getImg());
+            saveCourse.setImg(request.getImg());
         else if (request.getImg() != null && request.getImg().isEmpty())
-            savecourse.setImg(null);
+            saveCourse.setImg(null);
 
         if (request.getTitle() != null)
-            savecourse.setTitle(request.getTitle());
+            saveCourse.setTitle(request.getTitle());
         else if (request.getTitle() != null && request.getTitle().isEmpty())
-            savecourse.setTitle(null);
+            saveCourse.setTitle(null);
 
         if (request.getDescription() != null)
-            savecourse.setDescription(request.getDescription());
+            saveCourse.setDescription(request.getDescription());
         else if (request.getDescription() != null && request.getDescription().isEmpty())
-            savecourse.setDescription(null);
+            saveCourse.setDescription(null);
 
         if (request.getStatus() != 0)
-            savecourse.setStatus(request.getStatus());
+            saveCourse.setStatus(request.getStatus());
         else
-            savecourse.setStatus(0);
+            saveCourse.setStatus(0);
 
-        return savecourse;
+        log.info("Category conversion successful");
+        return saveCourse;
     }
 
 

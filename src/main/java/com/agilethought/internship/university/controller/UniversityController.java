@@ -45,10 +45,9 @@ public class UniversityController {
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<UpdateCourseResponse> putOperation(
 			@RequestBody UpdateCourseRequest request, @PathVariable String id) {
-		log.info("Calling Put operation request {}", request);
-		UpdateCourseResponse response = service.Updatecourse(request, id);
-		log.info("Calling Put operation response {}", response);
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		UpdateCourseResponse response = service.updateCourse(request, id);
+		log.info("PUT operation was successful", response);
+		return new ResponseEntity(response, HttpStatus.OK);
 	}
 
 }
