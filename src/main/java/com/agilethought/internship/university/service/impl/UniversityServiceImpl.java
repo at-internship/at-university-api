@@ -121,8 +121,7 @@ public class UniversityServiceImpl implements UniversityService {
 
         if (request.getStatus() != 0)
             saveCourse.setStatus(request.getStatus());
-        else
-            saveCourse.setStatus(0);
+
 
         log.info("Category conversion successful");
         return saveCourse;
