@@ -5,7 +5,6 @@ import com.agilethought.internship.university.model.Course;
 import com.agilethought.internship.university.repository.CoursesRepository;
 import com.agilethought.internship.university.service.UniversityService;
 import com.agilethought.internship.university.service.common.CategoryConstants;
-import com.agilethought.internship.university.service.common.OrikaTransformer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,22 +18,31 @@ import java.util.Optional;
 public class UniversityServiceImpl implements UniversityService {
 
     private final CoursesRepository repository;
-    private final OrikaTransformer orikaTransformer;
 
     @Autowired
-    public UniversityServiceImpl(CoursesRepository repository, OrikaTransformer orikaTransformer){
+    public UniversityServiceImpl(CoursesRepository repository){
         this.repository = repository;
-        this.orikaTransformer = orikaTransformer;
     }
 
     @Override
     public CreateCourseResponse createCourse(CreateCourseRequest request){
         CreateCourseResponse response = new CreateCourseResponse();
-        Course course = orikaTransformer.transformer(request);
+        Course course = this.requestToCourse(request);
         repository.save(course);
         log.info("Course saved with id: {}", course.get_id());
         response.setId(course.get_id().toString());
         return response;
+    }
+
+    private Course requestToCourse(CreateCourseRequest request){
+        Course course = new Course();
+        course.setCategory(CategoryConstants.valueOf(request.getCategory().toUpperCase()).getOrd());
+        log.info("Category conversion successful");
+        course.setTitle(request.getTitle());
+        course.setDescription(request.getDescription());
+        course.setImg(request.getImg());
+        course.setStatus(request.getStatus());
+        return course;
     }
 
 
@@ -43,11 +51,24 @@ public class UniversityServiceImpl implements UniversityService {
         List<Course> unchanged = repository.findAll();
         List<CourseResponse> newList = new ArrayList<>();
 
-
         for (Course c:unchanged) {
-            CourseResponse courseResponse = new CourseResponse();
-            courseResponse = orikaTransformer.transformer(c);
-            newList.add(courseResponse);
+            CourseResponse changed = new CourseResponse();
+
+            changed.set_id(c.get_id());
+            if(c.getCategory() == 1)
+                changed.setCategory("JAVA");
+            else if(c.getCategory() == 2)
+                changed.setCategory("PEGA");
+            else if(c.getCategory() == 3)
+                changed.setCategory("JS");
+            else
+                changed.setCategory("UNKNOWN");
+            changed.setTitle(c.getTitle());
+            changed.setDescription(c.getDescription());
+            changed.setImg(c.getImg());
+            changed.setStatus(c.getStatus());
+
+            newList.add(changed);
         }
 
         return newList;
