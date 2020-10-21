@@ -5,7 +5,7 @@ import com.agilethought.internship.university.model.Course;
 import com.agilethought.internship.university.repository.CoursesRepository;
 import com.agilethought.internship.university.service.UniversityService;
 import com.agilethought.internship.university.service.common.CategoryConstants;
-import com.agilethought.internship.university.service.common.SprintsTransformer;
+import com.agilethought.internship.university.service.common.OrikaTransformer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,18 +19,18 @@ import java.util.Optional;
 public class UniversityServiceImpl implements UniversityService {
 
     private final CoursesRepository repository;
-    private final SprintsTransformer sprintsTransformer;
+    private final OrikaTransformer orikaTransformer;
 
     @Autowired
-    public UniversityServiceImpl(CoursesRepository repository, SprintsTransformer sprintsTransformer){
+    public UniversityServiceImpl(CoursesRepository repository, OrikaTransformer orikaTransformer){
         this.repository = repository;
-        this.sprintsTransformer=sprintsTransformer;
+        this.orikaTransformer = orikaTransformer;
     }
 
     @Override
     public CreateCourseResponse createCourse(CreateCourseRequest request){
         CreateCourseResponse response = new CreateCourseResponse();
-        Course course = sprintsTransformer.transformer(request);
+        Course course = orikaTransformer.transformer(request);
         repository.save(course);
         log.info("Course saved with id: {}", course.get_id());
         response.setId(course.get_id().toString());

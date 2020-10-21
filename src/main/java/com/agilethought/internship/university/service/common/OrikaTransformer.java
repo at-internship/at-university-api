@@ -14,7 +14,7 @@ import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.ConfigurableMapper;
 
 @Component
-public class SprintsTransformer extends ConfigurableMapper{
+public class OrikaTransformer extends ConfigurableMapper{
 
     private MapperFacade mapperFacade;
 
@@ -47,3 +47,6 @@ public class SprintsTransformer extends ConfigurableMapper{
     }
 
 }
+
+
+
