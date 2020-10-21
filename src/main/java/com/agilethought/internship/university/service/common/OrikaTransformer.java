@@ -41,9 +41,10 @@ public class OrikaTransformer extends ConfigurableMapper{
         return course;
     }
 
-    public List<CourseResponse> listTransformer(List<Course>courses){
-
-        return mapperFacade.mapAsList(courses, CourseResponse.class);
+    public CourseResponse transformer(Course course){
+        CourseResponse courseResponse= mapperFacade.map(course,CourseResponse.class);
+        courseResponse.setCategory(CategoryConstants.getCategory(course.getCategory()));
+        return courseResponse;
     }
 
 }

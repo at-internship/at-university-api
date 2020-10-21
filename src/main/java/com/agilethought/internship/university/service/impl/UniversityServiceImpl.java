@@ -45,23 +45,9 @@ public class UniversityServiceImpl implements UniversityService {
 
 
         for (Course c:unchanged) {
-            CourseResponse changed = new CourseResponse();
-
-            changed.set_id(c.get_id());
-            if(c.getCategory() == 1)
-                changed.setCategory("JAVA");
-            else if(c.getCategory() == 2)
-                changed.setCategory("PEGA");
-            else if(c.getCategory() == 3)
-                changed.setCategory("JS");
-            else
-                changed.setCategory("UNKNOWN");
-            changed.setTitle(c.getTitle());
-            changed.setDescription(c.getDescription());
-            changed.setImg(c.getImg());
-            changed.setStatus(c.getStatus());
-
-            newList.add(changed);
+            CourseResponse courseResponse = new CourseResponse();
+            courseResponse = orikaTransformer.transformer(c);
+            newList.add(courseResponse);
         }
 
         return newList;
