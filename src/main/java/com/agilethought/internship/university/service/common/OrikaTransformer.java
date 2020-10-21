@@ -1,7 +1,5 @@
 package com.agilethought.internship.university.service.common;
 
-import java.util.List;
-
 import com.agilethought.internship.university.domain.CourseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
