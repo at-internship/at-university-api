@@ -1,6 +1,5 @@
 package com.agilethought.internship.university.exception;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
