@@ -86,12 +86,16 @@
 			</exclusions>
 		</dependency>
 
-
 		<dependency>
 			<groupId>org.junit.platform</groupId>
 			<artifactId>junit-platform-commons</artifactId>
 		</dependency>
 		
+    <dependency>
+			<groupId>ma.glasnost.orika</groupId>
+			<artifactId>orika-core</artifactId>
+			<version>1.4.6</version>
+		</dependency>
 
 	</dependencies>
 

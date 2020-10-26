@@ -13,5 +13,14 @@ public enum CategoryConstants {
     public int getOrd() {
         return this.ord;
     }
+
+    public static String getCategory(Integer ord){
+        for(CategoryConstants c:CategoryConstants.values()){
+            if(c.getOrd()==ord){
+                return c.name();
+            }
+        }
+        return("UNKNOWN");
+    }
 }
 
