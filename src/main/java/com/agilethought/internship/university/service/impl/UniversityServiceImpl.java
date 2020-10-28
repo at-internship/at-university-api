@@ -6,6 +6,7 @@ import com.agilethought.internship.university.repository.CoursesRepository;
 import com.agilethought.internship.university.service.UniversityService;
 import com.agilethought.internship.university.service.common.CategoryConstants;
 import com.agilethought.internship.university.service.common.OrikaTransformer;
+import com.agilethought.internship.university.validations.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,9 +28,13 @@ public class UniversityServiceImpl implements UniversityService {
         this.orikaTransformer = orikaTransformer;
     }
 
+    @Autowired
+    private Validator validator;
+
     @Override
     public CreateCourseResponse createCourse(CreateCourseRequest request){
         CreateCourseResponse response = new CreateCourseResponse();
+        Validator.requestValidation(request);
         Course course = orikaTransformer.transformer(request);
         repository.save(course);
         log.info("Course saved with id: {}", course.get_id());
@@ -53,13 +58,14 @@ public class UniversityServiceImpl implements UniversityService {
         return newList;
     }
 
-    public UpdateCourseResponse updateCourse(UpdateCourseRequest request, String courseid) {
+    public UpdateCourseResponse updateCourse(UpdateCourseRequest request, String id) {
 
         UpdateCourseResponse response = new UpdateCourseResponse();
-        Optional<Course> existCourse = repository.findById(courseid);
+        Optional<Course> course = repository.findById(id);
 
-        if (existCourse != null) {
-            Course newCourse = requestToUpdate(request, existCourse.get());
+        if (course != null) {
+            Validator.requestValidationToUpdate(request);
+            Course newCourse = requestToUpdate(request, course.get());
             repository.save(newCourse);
             if(newCourse.getCategory() == 1)
                 response.setCategory("JAVA");
@@ -72,35 +78,16 @@ public class UniversityServiceImpl implements UniversityService {
             response.setImg(newCourse.getImg());
             response.setStatus(newCourse.getStatus());
         }
-
         return response;
     }
 
     private Course requestToUpdate(UpdateCourseRequest request, Course saveCourse){
 
-        if (request.getCategory() != null && !request.getCategory().isEmpty())
             saveCourse.setCategory(CategoryConstants.valueOf(request.getCategory().toUpperCase()).getOrd());
-        else if (request.getCategory() != null && request.getCategory().isEmpty())
-            saveCourse.setCategory(0);
-
-        if (request.getImg() != null)
             saveCourse.setImg(request.getImg());
-        else if (request.getImg() != null && request.getImg().isEmpty())
-            saveCourse.setImg(null);
-
-        if (request.getTitle() != null)
             saveCourse.setTitle(request.getTitle());
-        else if (request.getTitle() != null && request.getTitle().isEmpty())
-            saveCourse.setTitle(null);
-
-        if (request.getDescription() != null)
             saveCourse.setDescription(request.getDescription());
-        else if (request.getDescription() != null && request.getDescription().isEmpty())
-            saveCourse.setDescription(null);
-
-        if (request.getStatus() != 0)
             saveCourse.setStatus(request.getStatus());
-
 
         log.info("Category conversion successful");
         return saveCourse;

@@ -1,5 +1,8 @@
 package com.agilethought.internship.university.service.common;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum CategoryConstants {
     JAVA(1),
     PEGA(2),
@@ -21,6 +24,15 @@ public enum CategoryConstants {
             }
         }
         return("UNKNOWN");
+    }
+
+    public static List<String> getCategoryNames(){
+
+        List<String> names = new ArrayList<>();
+        for (CategoryConstants c:CategoryConstants.values()) {
+            names.add(c.name());
+        }
+        return names;
     }
 }
 
