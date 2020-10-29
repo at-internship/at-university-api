@@ -1,6 +1,7 @@
 package com.agilethought.internship.university.service.impl;
 
 import com.agilethought.internship.university.domain.*;
+import com.agilethought.internship.university.exception.NotFoundException;
 import com.agilethought.internship.university.model.Course;
 import com.agilethought.internship.university.repository.CoursesRepository;
 import com.agilethought.internship.university.service.UniversityService;
@@ -54,7 +55,9 @@ public class UniversityServiceImpl implements UniversityService {
             courseResponse = orikaTransformer.transformer(c);
             newList.add(courseResponse);
         }
-
+        if(newList.isEmpty()){
+            throw new NotFoundException("No records in DB, try again later","/courses/");
+        }
         return newList;
     }
 
@@ -63,7 +66,7 @@ public class UniversityServiceImpl implements UniversityService {
         UpdateCourseResponse response = new UpdateCourseResponse();
         Optional<Course> course = repository.findById(id);
 
-        if (course != null) {
+        if (repository.existsById(id)) {
             Validator.requestValidationToUpdate(request);
             Course newCourse = requestToUpdate(request, course.get());
             repository.save(newCourse);
@@ -77,8 +80,10 @@ public class UniversityServiceImpl implements UniversityService {
             response.setDescription(newCourse.getDescription());
             response.setImg(newCourse.getImg());
             response.setStatus(newCourse.getStatus());
+            return response;
+        }else {
+            throw new NotFoundException("Course not found, check id and try again","/courses/{id}");
         }
-        return response;
     }
 
     private Course requestToUpdate(UpdateCourseRequest request, Course saveCourse){
@@ -92,6 +97,5 @@ public class UniversityServiceImpl implements UniversityService {
         log.info("Category conversion successful");
         return saveCourse;
     }
-
 
 }
