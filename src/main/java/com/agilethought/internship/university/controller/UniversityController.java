@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import lombok.extern.slf4j.Slf4j;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping(value = "/api/v1")
@@ -36,7 +35,7 @@ public class UniversityController {
 	@PostMapping(value ="/course")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<CreateCourseResponse> postCourses(
-			@ApiParam(value = "Post course request", required = true) @Valid @RequestBody CreateCourseRequest request){
+			@ApiParam(value = "Post course request", required = true) @RequestBody CreateCourseRequest request){
 		log.info("UniversityController.postCourses - operation request {}", request);
 		CreateCourseResponse response=service.createCourse(request);
 		log.info("UniversityController.postCourses - operation response {}", response);
@@ -46,7 +45,7 @@ public class UniversityController {
 	@PutMapping(value = "/course/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<UpdateCourseResponse> putOperation(
-			@RequestBody UpdateCourseRequest request, @Valid @PathVariable String id) {
+			@RequestBody UpdateCourseRequest request, @PathVariable String id) {
 		UpdateCourseResponse response = service.updateCourse(request, id);
 		log.info("PUT operation was successful", response);
 		return new ResponseEntity(response, HttpStatus.OK);
