@@ -21,6 +21,6 @@ public class CreateCourseRequest {
     @ApiModelProperty(value = "Logo of the Course", example = "img.jpg")
     private String img;
     @ApiModelProperty(value = "Course status", example = "1")
-    private int status;
+    private Integer status;
 
 }

@@ -1,11 +1,15 @@
 package com.agilethought.internship.university.service.impl;
 
 import com.agilethought.internship.university.domain.*;
+import com.agilethought.internship.university.exception.NotFoundException;
 import com.agilethought.internship.university.model.Course;
 import com.agilethought.internship.university.repository.CoursesRepository;
 import com.agilethought.internship.university.service.UniversityService;
 import com.agilethought.internship.university.service.common.CategoryConstants;
+import com.agilethought.internship.university.service.common.OrikaTransformer;
+import com.agilethought.internship.university.validations.Validator;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,24 +31,15 @@ public class UniversityServiceImpl implements UniversityService {
     @Override
     public CreateCourseResponse createCourse(CreateCourseRequest request){
         CreateCourseResponse response = new CreateCourseResponse();
-        Course course = this.requestToCourse(request);
+        log.info("Starting POST validations");
+        Validator.requestValidation(request);
+        log.info("POST validations completed");
+        Course course = orikaTransformer.transformer(request);
         repository.save(course);
         log.info("Course saved with id: {}", course.get_id());
         response.setId(course.get_id().toString());
         return response;
     }
-
-    private Course requestToCourse(CreateCourseRequest request){
-        Course course = new Course();
-        course.setCategory(CategoryConstants.valueOf(request.getCategory().toUpperCase()).getOrd());
-        log.info("Category conversion successful");
-        course.setTitle(request.getTitle());
-        course.setDescription(request.getDescription());
-        course.setImg(request.getImg());
-        course.setStatus(request.getStatus());
-        return course;
-    }
-
 
     public List<CourseResponse> getCourses() {
 
@@ -70,7 +65,8 @@ public class UniversityServiceImpl implements UniversityService {
 
             newList.add(changed);
         }
-
+        if (newList.isEmpty())
+            throw new NotFoundException("No records in DB, try again later","/courses/");
         return newList;
     }
 
@@ -79,7 +75,10 @@ public class UniversityServiceImpl implements UniversityService {
         UpdateCourseResponse response = new UpdateCourseResponse();
         Optional<Course> existCourse = repository.findById(courseid);
 
-        if (existCourse != null) {
+        log.info("Starting PUT validations");
+        Validator.requestValidationToUpdate(request);
+        log.info("PUT validations completed");
+        if (repository.existsById(courseid)) {
             Course newCourse = requestToUpdate(request, existCourse.get());
             repository.save(newCourse);
             if(newCourse.getCategory() == 1)
@@ -92,9 +91,9 @@ public class UniversityServiceImpl implements UniversityService {
             response.setDescription(newCourse.getDescription());
             response.setImg(newCourse.getImg());
             response.setStatus(newCourse.getStatus());
-        }
-
-        return response;
+            return response;
+        } else
+            throw new NotFoundException("Course not found, check id and try again","/courses/{id}");
     }
 
     @Override
@@ -113,33 +112,25 @@ public class UniversityServiceImpl implements UniversityService {
 
     private Course requestToUpdate(UpdateCourseRequest request, Course saveCourse){
 
-        if (request.getCategory() != null && !request.getCategory().isEmpty())
+        if (StringUtils.isNotBlank(request.getCategory()))
             saveCourse.setCategory(CategoryConstants.valueOf(request.getCategory().toUpperCase()).getOrd());
-        else if (request.getCategory() != null && request.getCategory().isEmpty())
+        else
             saveCourse.setCategory(0);
-
-        if (request.getImg() != null)
+        if (StringUtils.isNotBlank(request.getImg()))
             saveCourse.setImg(request.getImg());
-        else if (request.getImg() != null && request.getImg().isEmpty())
+        else
             saveCourse.setImg(null);
-
-        if (request.getTitle() != null)
+        if (StringUtils.isNotBlank(request.getTitle()))
             saveCourse.setTitle(request.getTitle());
-        else if (request.getTitle() != null && request.getTitle().isEmpty())
+        else
             saveCourse.setTitle(null);
-
-        if (request.getDescription() != null)
+        if (StringUtils.isNotBlank(request.getDescription()))
             saveCourse.setDescription(request.getDescription());
-        else if (request.getDescription() != null && request.getDescription().isEmpty())
+        else
             saveCourse.setDescription(null);
-
-        if (request.getStatus() != 0)
-            saveCourse.setStatus(request.getStatus());
-
 
         log.info("Category conversion successful");
         return saveCourse;
     }
-
 
 }
