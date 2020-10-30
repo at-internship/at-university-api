@@ -97,6 +97,20 @@ public class UniversityServiceImpl implements UniversityService {
         return response;
     }
 
+    @Override
+    public void deleteCourse(String id) {
+        log.info("id received:{}",id);
+        if (repository.existsById(id)){
+            log.info("id exists");
+            repository.deleteById(id);
+            log.info("id deleted");
+        } else{
+            //TODO IMPLEMENT NOT FOUND EXCEPTION
+            log.warn("id not found");
+        }
+    }
+
+
     private Course requestToUpdate(UpdateCourseRequest request, Course saveCourse){
 
         if (request.getCategory() != null && !request.getCategory().isEmpty())
