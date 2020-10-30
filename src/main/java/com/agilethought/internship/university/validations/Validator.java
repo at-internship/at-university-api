@@ -32,9 +32,7 @@ public class Validator {
         log.debug("Category field create content validation successful");
     }
 
-    public static void requestValidationToUpdate(UpdateCourseRequest request, String id) {
-        if(StringUtils.isBlank(id))
-            throw new BadRequestException("Course ID is required to update","/courses/{id}");
+    public static void requestValidationToUpdate(UpdateCourseRequest request) {
         if (!CategoryConstants.getCategoryNames().contains(request.getCategory().toUpperCase()))
             throw new BadRequestException("Incorrect category value", "/courses/");
         log.debug("Category field update content validation successful");

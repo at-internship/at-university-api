@@ -33,7 +33,9 @@ public class UniversityServiceImpl implements UniversityService {
     @Override
     public CreateCourseResponse createCourse(CreateCourseRequest request){
         CreateCourseResponse response = new CreateCourseResponse();
+        log.info("Starting POST validations");
         Validator.requestValidation(request);
+        log.info("POST validations completed");
         Course course = orikaTransformer.transformer(request);
         repository.save(course);
         log.info("Course saved with id: {}", course.get_id());
@@ -61,9 +63,9 @@ public class UniversityServiceImpl implements UniversityService {
         UpdateCourseResponse response = new UpdateCourseResponse();
         Optional<Course> existCourse = repository.findById(courseid);
 
-        log.info("Starting validations");
-        Validator.requestValidationToUpdate(request, courseid);
-        log.info("Validations completed");
+        log.info("Starting PUT validations");
+        Validator.requestValidationToUpdate(request);
+        log.info("PUT validations completed");
         if (repository.existsById(courseid)) {
             Course newCourse = requestToUpdate(request, existCourse.get());
             repository.save(newCourse);
@@ -84,24 +86,22 @@ public class UniversityServiceImpl implements UniversityService {
 
     private Course requestToUpdate(UpdateCourseRequest request, Course saveCourse){
 
-        if (!StringUtils.isBlank(request.getCategory()))
+        if (StringUtils.isNotBlank(request.getCategory()))
             saveCourse.setCategory(CategoryConstants.valueOf(request.getCategory().toUpperCase()).getOrd());
-        else if (StringUtils.isBlank(request.getCategory()))
+        else
             saveCourse.setCategory(0);
-        if (request.getImg() != null)
+        if (StringUtils.isNotBlank(request.getImg()))
             saveCourse.setImg(request.getImg());
-        else if (StringUtils.isBlank(request.getImg()))
+        else
             saveCourse.setImg(null);
-        if (request.getTitle() != null)
+        if (StringUtils.isNotBlank(request.getTitle()))
             saveCourse.setTitle(request.getTitle());
-        else if (StringUtils.isBlank(request.getTitle()))
+        else
             saveCourse.setTitle(null);
-        if (request.getDescription() != null)
+        if (StringUtils.isNotBlank(request.getDescription()))
             saveCourse.setDescription(request.getDescription());
-        else if (StringUtils.isBlank(request.getDescription()));
+        else
             saveCourse.setDescription(null);
-        if (request.getStatus() != 0)
-            saveCourse.setStatus(request.getStatus());
 
         log.info("Category conversion successful");
         return saveCourse;

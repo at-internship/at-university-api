@@ -1,6 +1,7 @@
 package com.agilethought.internship.university.controller;
 
 import com.agilethought.internship.university.domain.*;
+import com.agilethought.internship.university.exception.NotFoundException;
 import com.agilethought.internship.university.service.UniversityService;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,12 @@ public class UniversityController {
 		UpdateCourseResponse response = service.updateCourse(request, id);
 		log.info("PUT operation was successful", response);
 		return new ResponseEntity(response, HttpStatus.OK);
+	}
+
+	@PutMapping(value = "/course/")
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public void putNullOperation() {
+		throw new NotFoundException("Course ID is required to update","/courses/{id}");
 	}
 
 }
