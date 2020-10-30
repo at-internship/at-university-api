@@ -50,4 +50,13 @@ public class UniversityController {
 		return new ResponseEntity(response, HttpStatus.OK);
 	}
 
+	@DeleteMapping(value = "/course/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<DeleteCourseResponse> deleteOperation(
+			@PathVariable String id) {
+		service.deleteCourse(id);
+		log.info("DELETE operation was successful, deleted id:{}", id);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+
 }

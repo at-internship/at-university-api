@@ -9,4 +9,5 @@ public interface UniversityService {
     CreateCourseResponse createCourse(CreateCourseRequest request);
     List<CourseResponse> getCourses();
     UpdateCourseResponse updateCourse(UpdateCourseRequest request, String id);
+    void deleteCourse(String id);
 }
