@@ -84,6 +84,19 @@ public class UniversityServiceImpl implements UniversityService {
             throw new NotFoundException("Course not found, check id and try again","/courses/{id}");
     }
 
+    @Override
+    public void deleteCourse(String id) {
+        log.info("id received:{}",id);
+        if (repository.existsById(id)){
+            log.info("id exists");
+            repository.deleteById(id);
+            log.info("id deleted");
+        } else{
+            //TODO IMPLEMENT NOT FOUND EXCEPTION
+            log.warn("id not found");
+        }
+    }
+
     private Course requestToUpdate(UpdateCourseRequest request, Course saveCourse){
 
         if (StringUtils.isNotBlank(request.getCategory()))
