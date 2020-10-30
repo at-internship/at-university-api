@@ -58,4 +58,14 @@ public class UniversityController {
 		throw new NotFoundException("Course ID is required to update","/courses/{id}");
 	}
 
+	@DeleteMapping(value = "/course/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<DeleteCourseResponse> deleteOperation(
+			@PathVariable String id) {
+		service.deleteCourse(id);
+		log.info("DELETE operation was successful, deleted id:{}", id);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+
+
 }
