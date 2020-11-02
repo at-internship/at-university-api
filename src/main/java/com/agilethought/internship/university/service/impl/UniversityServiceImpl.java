@@ -54,19 +54,17 @@ public class UniversityServiceImpl implements UniversityService {
             newList.add(courseResponse);
         }
         if (newList.isEmpty())
-            throw new NotFoundException("No records in DB, try again later","/courses/");
+            throw new NotFoundException("No courses available, try again later","/courses/");
         return newList;
     }
 
     public UpdateCourseResponse updateCourse(UpdateCourseRequest request, String courseid) {
-
         UpdateCourseResponse response = new UpdateCourseResponse();
-        Optional<Course> existCourse = repository.findById(courseid);
-
         log.info("Starting PUT validations");
-        Validator.requestValidationToUpdate(request);
+        Validator.requestValidationToUpdate(request,courseid);
         log.info("PUT validations completed");
         if (repository.existsById(courseid)) {
+            Optional<Course> existCourse = repository.findById(courseid);
             Course newCourse = requestToUpdate(request, existCourse.get());
             repository.save(newCourse);
             if(newCourse.getCategory() == 1)
@@ -87,13 +85,14 @@ public class UniversityServiceImpl implements UniversityService {
     @Override
     public void deleteCourse(String id) {
         log.info("id received:{}",id);
+        Validator.validationToDelete(id);
         if (repository.existsById(id)){
             log.info("id exists");
             repository.deleteById(id);
             log.info("id deleted");
         } else{
-            //TODO IMPLEMENT NOT FOUND EXCEPTION
             log.warn("id not found");
+            throw new NotFoundException("Course does not exist","/course/");
         }
     }
 

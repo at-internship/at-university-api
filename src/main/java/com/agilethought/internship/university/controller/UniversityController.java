@@ -1,7 +1,6 @@
 package com.agilethought.internship.university.controller;
 
 import com.agilethought.internship.university.domain.*;
-import com.agilethought.internship.university.exception.NotFoundException;
 import com.agilethought.internship.university.service.UniversityService;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,29 +42,21 @@ public class UniversityController {
 		return new ResponseEntity<>(response,HttpStatus.CREATED);
 	}
 
-	@PutMapping(value = "/course/{id}")
+	@PutMapping(value = {"/course/","/course/{id}"})
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<UpdateCourseResponse> putOperation(
-			@RequestBody UpdateCourseRequest request, @PathVariable String id) {
+			@RequestBody UpdateCourseRequest request, @PathVariable(required = false) String id) {
 		UpdateCourseResponse response = service.updateCourse(request, id);
-		log.info("PUT operation was successful", response);
-		return new ResponseEntity(response, HttpStatus.OK);
+		log.info("PUT operation was successful:{}", response);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PutMapping(value = "/course/")
-	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public void putNullOperation() {
-		throw new NotFoundException("Course ID is required to update","/courses/{id}");
-	}
-
-	@DeleteMapping(value = "/course/{id}")
+	@DeleteMapping(value = {"course","/course/{id}"})
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<DeleteCourseResponse> deleteOperation(
-			@PathVariable String id) {
+	public ResponseEntity<DeleteCourseResponse> deleteOperation(@PathVariable(required = false) String id) {
 		service.deleteCourse(id);
 		log.info("DELETE operation was successful, deleted id:{}", id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-
 
 }

@@ -16,29 +16,35 @@ public class Validator {
 
     public static void requestValidation(CreateCourseRequest request) {
         if(StringUtils.isBlank(request.getCategory()))
-            throw new BadRequestException("Category field is required", "/courses/");
+            throw new BadRequestException("Category field is required", "/course/");
         log.debug("Category field validation successful");
         if (!CategoryConstants.getCategoryNames().contains(request.getCategory().toUpperCase()))
-            throw new BadRequestException("Incorrect category value", "/courses/");
+            throw new BadRequestException("Incorrect category value", "/course/");
         log.debug("Category field create content validation successful");
         if(StringUtils.isBlank(request.getTitle()))
-            throw new BadRequestException("Title field is required", "/courses/");
+            throw new BadRequestException("Title field is required", "/course/");
         log.debug("Title field validation successful");
         if(Objects.isNull(request.getStatus()))
-            throw new BadRequestException("Status field is required", "/courses/");
+            throw new BadRequestException("Status field is required", "/course/");
         log.debug("Status field validation successful");
         if(request.getStatus()>=2)
-            throw new BadRequestException("Bad status value", "/courses/");
+            throw new BadRequestException("Bad status value", "/course/");
         log.debug("Category field create content validation successful");
     }
 
-    public static void requestValidationToUpdate(UpdateCourseRequest request) {
+    public static void requestValidationToUpdate(UpdateCourseRequest request, String id) {
+        if (StringUtils.isBlank(id))
+            throw new BadRequestException("Course ID is required to update","/course/");
         if (!CategoryConstants.getCategoryNames().contains(request.getCategory().toUpperCase()))
-            throw new BadRequestException("Incorrect category value", "/courses/");
+            throw new BadRequestException("Incorrect category value", "/course/");
         log.debug("Category field update content validation successful");
         if(request.getStatus()>=2)
-            throw new BadRequestException("Bad status value", "/courses/");
+            throw new BadRequestException("Bad status value", "/course/");
         log.debug("Category field update content validation successful");
     }
 
+    public static void validationToDelete(String id) {
+        if (StringUtils.isBlank(id))
+            throw new BadRequestException("Course ID is required to update","/course/");
+    }
 }
