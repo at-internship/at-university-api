@@ -54,7 +54,7 @@ public class UniversityServiceImpl implements UniversityService {
             newList.add(courseResponse);
         }
         if (newList.isEmpty())
-            throw new NotFoundException("No courses available, try again later","/courses/");
+            throw new NotFoundException("No courses available, try again later","/course/");
         return newList;
     }
 
@@ -79,7 +79,7 @@ public class UniversityServiceImpl implements UniversityService {
             response.setStatus(newCourse.getStatus());
             return response;
         } else
-            throw new NotFoundException("Course not found, check id and try again","/courses/{id}");
+            throw new NotFoundException("Course not found, check id and try again","/course/{id}");
     }
 
     @Override
@@ -92,7 +92,7 @@ public class UniversityServiceImpl implements UniversityService {
             log.info("id deleted");
         } else{
             log.warn("id not found");
-            throw new NotFoundException("Course does not exist","/course/");
+            throw new NotFoundException("Course does not exist, check id and try again","/course/");
         }
     }
 

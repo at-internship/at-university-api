@@ -45,6 +45,6 @@ public class Validator {
 
     public static void validationToDelete(String id) {
         if (StringUtils.isBlank(id))
-            throw new BadRequestException("Course ID is required to update","/course/");
+            throw new BadRequestException("Course ID is required to delete","/course/");
     }
 }
