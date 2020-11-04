@@ -57,5 +57,18 @@ public class UniversityDummy {
 
         return list;
     }
+    
+    public static CourseResponse getCourseResponse(){
+        CourseResponse courseResponse = new CourseResponse();
+
+        courseResponse.set_id("1a2b3c");
+        courseResponse.setCategory("JAVA");
+        courseResponse.setTitle("Title");
+        courseResponse.setDescription("Description");
+        courseResponse.setImg("Image");
+        courseResponse.setStatus(1);
+
+        return courseResponse;
+    }
 
 }

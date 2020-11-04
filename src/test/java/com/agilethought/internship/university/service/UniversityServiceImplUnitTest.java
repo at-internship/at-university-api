@@ -1,6 +1,7 @@
 package com.agilethought.internship.university.service;
 
 import com.agilethought.internship.university.UniversityDummy;
+import com.agilethought.internship.university.domain.CourseResponse;
 import com.agilethought.internship.university.domain.CreateCourseRequest;
 import com.agilethought.internship.university.domain.CreateCourseResponse;
 import com.agilethought.internship.university.model.Course;
@@ -14,6 +15,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -43,6 +47,19 @@ public class UniversityServiceImplUnitTest {
         CreateCourseResponse result = universityService.createCourse(UniversityDummy.getPostChartNoteRequest());
         assertThat(result).isEqualToComparingFieldByField(response);
     }
+
+    @Test
+    public void getCourseServiceSuccessful() throws Exception{
+        List<CourseResponse> response = UniversityDummy.getListCourseResponseEmpty();
+
+        Mockito.when(orikaTransformer.transformer(Mockito.any(Course.class)))
+                .thenReturn(UniversityDummy.getCourseResponse());
+
+        List<CourseResponse> result = universityService.getCourses();
+        assertThat(result).isEqualTo(response);
+    }
+
+
 
 
 }
