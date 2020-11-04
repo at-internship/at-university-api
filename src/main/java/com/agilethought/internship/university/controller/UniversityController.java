@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.extern.slf4j.Slf4j;
+
 import java.util.List;
 
 @RequestMapping(value = "/api/v1")
@@ -41,13 +42,21 @@ public class UniversityController {
 		return new ResponseEntity<>(response,HttpStatus.CREATED);
 	}
 
-	@PutMapping(value = "/course/{id}")
+	@PutMapping(value = {"/course/","/course/{id}"})
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<UpdateCourseResponse> putOperation(
-			@RequestBody UpdateCourseRequest request, @PathVariable String id) {
+			@RequestBody UpdateCourseRequest request, @PathVariable(required = false) String id) {
 		UpdateCourseResponse response = service.updateCourse(request, id);
-		log.info("PUT operation was successful", response);
-		return new ResponseEntity(response, HttpStatus.OK);
+		log.info("PUT operation was successful:{}", response);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
+	@DeleteMapping(value = {"/course/","/course/{id}"})
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<DeleteCourseResponse> deleteOperation(@PathVariable(required = false) String id) {
+		service.deleteCourse(id);
+		log.info("DELETE operation was successful, deleted id:{}", id);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
 }

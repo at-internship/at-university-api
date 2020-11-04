@@ -13,6 +13,6 @@ public class UpdateCourseRequest {
     private String title;
     private String description;
     private String img;
-    private int status;
+    private Integer status;
 
 }
