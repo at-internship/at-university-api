@@ -51,7 +51,7 @@ public class UniversityController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@DeleteMapping(value = {"course","/course/{id}"})
+	@DeleteMapping(value = {"/course/","/course/{id}"})
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<DeleteCourseResponse> deleteOperation(@PathVariable(required = false) String id) {
 		service.deleteCourse(id);
