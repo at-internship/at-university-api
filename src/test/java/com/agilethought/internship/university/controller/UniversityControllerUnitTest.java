@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
 
 public class UniversityControllerUnitTest {
 
@@ -33,13 +34,14 @@ public class UniversityControllerUnitTest {
     @Test
     public void testPostSuccessful() throws Exception {
 
-        ResponseEntity<CreateCourseResponse> response = new ResponseEntity<>(new CreateCourseResponse(), HttpStatus.CREATED);
+        ResponseEntity<CreateCourseResponse> response = new ResponseEntity<>(
+                new CreateCourseResponse(), HttpStatus.CREATED);
         Mockito.when(universityService.createCourse(Mockito.any(CreateCourseRequest.class)))
                 .thenReturn(new CreateCourseResponse());
 
-        ResponseEntity<CreateCourseResponse> result = universityController.postCourses(UniversityDummy.getPostChartNoteRequest());
+        ResponseEntity<CreateCourseResponse> result = universityController.postCourses(
+                UniversityDummy.getPostChartNoteRequest());
         assertThat(result.getBody()).isEqualToComparingFieldByField(response.getBody());
-        assertThat(result.getStatusCode()).isEqualToComparingFieldByField(response.getStatusCode());
     }
 
 
@@ -51,16 +53,17 @@ public class UniversityControllerUnitTest {
         assertThat(result).isEqualTo(response);
     }
 
-    /* PRUEBA DEL POST
     @Test
     public void testPutSuccessful() throws Exception {
 
-        ResponseEntity<UpdateCourseResponse> response = new ResponseEntity<>(new UpdateCourseResponse(), HttpStatus.OK);
-        Mockito.when(universityService.updateCourse(Mockito.any(UpdateCourseRequest.class, String id))
+        ResponseEntity<UpdateCourseResponse> response = new ResponseEntity<>(
+                new UpdateCourseResponse(), HttpStatus.OK);
+        Mockito.when(universityService.updateCourse(Mockito.any(UpdateCourseRequest.class),eq("String id")))
                 .thenReturn(new UpdateCourseResponse());
 
-        ResponseEntity<UpdateCourseResponse> result = universityController.putOperation(UniversityDummy.getPutChartNoteRequest());
+        ResponseEntity<UpdateCourseResponse> result = universityController.putOperation(
+                UniversityDummy.getPutChartNoteRequest(),"test");
+        assertThat(result.getBody()).isEqualToComparingFieldByField(response.getBody());
     }
-    */
 
 }

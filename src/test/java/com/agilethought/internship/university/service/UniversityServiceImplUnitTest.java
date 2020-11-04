@@ -1,9 +1,7 @@
 package com.agilethought.internship.university.service;
 
 import com.agilethought.internship.university.UniversityDummy;
-import com.agilethought.internship.university.domain.CourseResponse;
-import com.agilethought.internship.university.domain.CreateCourseRequest;
-import com.agilethought.internship.university.domain.CreateCourseResponse;
+import com.agilethought.internship.university.domain.*;
 import com.agilethought.internship.university.model.Course;
 import com.agilethought.internship.university.repository.CoursesRepository;
 import com.agilethought.internship.university.service.common.OrikaTransformer;
@@ -15,8 +13,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -59,7 +55,10 @@ public class UniversityServiceImplUnitTest {
         assertThat(result).isEqualTo(response);
     }
 
+    /*@Test
+    public void putCourseServiceSuccessful() throws Exception{
+        UpdateCourseResponse response = UniversityDummy.getPutChartNoteRequest();
 
-
-
+        Mockito.when(universityService.updateCourse(Mockito.any(UpdateCourseRequest.class)),eq("test"));
+    }*/
 }

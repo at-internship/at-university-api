@@ -37,7 +37,6 @@ public class UniversityDummy {
         return course;
     }
 
-    /*
     public static UpdateCourseRequest getPutChartNoteRequest(){
 
         UpdateCourseRequest request = new UpdateCourseRequest();
@@ -50,7 +49,7 @@ public class UniversityDummy {
 
         return request;
 
-    }*/
+    }
 
     public static List<CourseResponse> getListCourseResponseEmpty(){
         List<CourseResponse> list = new ArrayList<>();
