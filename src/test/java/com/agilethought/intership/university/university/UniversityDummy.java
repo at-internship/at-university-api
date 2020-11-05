@@ -56,7 +56,6 @@ public class UniversityDummy {
 
         Course test = new Course();
 
-        test.set_id("id123");
         test.setCategory(1);
         test.setDescription("Description");
         test.setImg("Image");
