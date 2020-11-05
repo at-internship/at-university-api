@@ -22,6 +22,10 @@ public class UniversityDummy {
 
     }
 
+    public static String getPathVariableId(){
+        return "123";
+    }
+
     public static CreateCourseResponse getPostChartNoteResponse(){
         CreateCourseResponse response = new CreateCourseResponse();
         response.setId("1a2b3c");
@@ -45,6 +49,21 @@ public class UniversityDummy {
         request.setTitle("Title");
 
         return request;
+
+    }
+
+    public static Course getCourseTest(){
+
+        Course test = new Course();
+
+        test.set_id("id123");
+        test.setCategory(1);
+        test.setDescription("Description");
+        test.setImg("Image");
+        test.setStatus(1);
+        test.setTitle("Title");
+
+        return test;
 
     }
 

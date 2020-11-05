@@ -20,6 +20,8 @@ import static org.mockito.ArgumentMatchers.eq;
 
 public class UniversityServiceImplUnitTest {
 
+
+
     @InjectMocks
     private UniversityServiceImpl universityService;
 
@@ -60,11 +62,12 @@ public class UniversityServiceImplUnitTest {
     public void putCourseServiceSuccessful() throws Exception{
         UpdateCourseResponse response = UniversityDummy.getPutChartNoteResponse();
 
-        Mockito.when(universityService.updateCourse(Mockito.any(UpdateCourseRequest.class),eq("test")))
+        Mockito.when(universityService.updateCourse(Mockito.any(UpdateCourseRequest.class),
+                eq(UniversityDummy.getPathVariableId())))
                 .thenReturn(UniversityDummy.getPutChartNoteResponse());
 
         UpdateCourseResponse result = universityService.updateCourse(
-                UniversityDummy.getPutChartNoteRequest(),eq("test"));
+                UniversityDummy.getPutChartNoteRequest(),eq(UniversityDummy.getPathVariableId()));
         assertThat(result).isEqualToComparingFieldByField(response);
     }
 
@@ -72,8 +75,9 @@ public class UniversityServiceImplUnitTest {
     public void putCourseToRequestServiceSuccessful() throws Exception{
         Course response = UniversityDummy.getCourse();
 
-        Mockito.when(universityService.requestToUpdate(Mockito.any(UpdateCourseRequest.class),Mockito.any(Course.class)))
-                .thenReturn(UniversityDummy.getCourse());
+        Mockito.when(universityService.requestToUpdate(Mockito.any(UpdateCourseRequest.class)
+                ,Mockito.any(Course.class)))
+                .thenReturn(UniversityDummy.getCourseTest());
 
         Course result = universityService.requestToUpdate(
                 UniversityDummy.getPutChartNoteRequest(),UniversityDummy.getCourse());

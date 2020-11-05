@@ -58,11 +58,12 @@ public class UniversityControllerUnitTest {
 
         ResponseEntity<UpdateCourseResponse> response = new ResponseEntity<>(
                 new UpdateCourseResponse(), HttpStatus.OK);
-        Mockito.when(universityService.updateCourse(Mockito.any(UpdateCourseRequest.class),eq("String id")))
+        Mockito.when(universityService.updateCourse(
+                Mockito.any(UpdateCourseRequest.class),eq(UniversityDummy.getPathVariableId())))
                 .thenReturn(new UpdateCourseResponse());
 
         ResponseEntity<UpdateCourseResponse> result = universityController.putOperation(
-                UniversityDummy.getPutChartNoteRequest(),"test");
+                UniversityDummy.getPutChartNoteRequest(),UniversityDummy.getPathVariableId());
         assertThat(result.getBody()).isEqualToComparingFieldByField(response.getBody());
     }
 
