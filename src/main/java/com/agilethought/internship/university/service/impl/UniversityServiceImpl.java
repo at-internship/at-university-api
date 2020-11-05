@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -114,6 +115,8 @@ public class UniversityServiceImpl implements UniversityService {
             saveCourse.setDescription(request.getDescription());
         else
             saveCourse.setDescription(null);
+        if (Objects.nonNull(request.getStatus()))
+            saveCourse.setStatus(request.getStatus());
 
         log.info("Category conversion successful");
         return saveCourse;
