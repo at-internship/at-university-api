@@ -14,10 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
@@ -56,18 +53,14 @@ public class UniversityServiceImplUnitTest {
 
     @Test
     public void getCourseServiceSuccessful() throws Exception{
-        
-        List<CourseResponse> response = UniversityDummy.getListCourseResponseEmpty();
-        response.add(UniversityDummy.getCourseResponse());
 
+        List<CourseResponse> response = Collections.singletonList(new CourseResponse());
         Mockito.when(orikaTransformer.transformer(Mockito.any(Course.class)))
-                .thenReturn(UniversityDummy.getCourseResponse());
-
+                .thenReturn(new CourseResponse());
         Mockito.when(coursesRepository.findAll())
-                .thenReturn(new ArrayList<>(Arrays.asList(new Course())));
-
+                .thenReturn(new ArrayList<>(Collections.singletonList(new Course())));
         List<CourseResponse> result = universityService.getCourses();
-        assertThat(result.toString().equalsIgnoreCase(response.toString())).isTrue();
+        assertThat(result.get(0)).isEqualToComparingFieldByField(response.get(0));
     }
 
     @Test
