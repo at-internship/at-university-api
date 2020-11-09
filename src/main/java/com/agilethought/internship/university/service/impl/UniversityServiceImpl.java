@@ -97,7 +97,7 @@ public class UniversityServiceImpl implements UniversityService {
         }
     }
 
-    private Course requestToUpdate(UpdateCourseRequest request, Course saveCourse){
+    public Course requestToUpdate(UpdateCourseRequest request, Course saveCourse){
 
         if (StringUtils.isNotBlank(request.getCategory()))
             saveCourse.setCategory(CategoryConstants.valueOf(request.getCategory().toUpperCase()).getOrd());
