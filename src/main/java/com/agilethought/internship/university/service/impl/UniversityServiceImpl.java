@@ -60,6 +60,7 @@ public class UniversityServiceImpl implements UniversityService {
         log.info("UniversityServiceImpl.getCourses - list of courses transformed: {}", newList);
         if (newList.isEmpty())
             throw new NotFoundException("No courses available, try again later","/course/");
+        log.info("UniversityServiceImpl.getCourses - getCourses operation was successful: {}", newList);
         return newList;
     }
 
@@ -69,9 +70,12 @@ public class UniversityServiceImpl implements UniversityService {
         Validator.requestValidationToUpdate(request,courseid);
         log.info("UniversityServiceImpl.updateCourse - PUT validations completed");
         if (repository.existsById(courseid)) {
+            log.info("UniversityServiceImpl.updateCourse - id exists");
             Optional<Course> existCourse = repository.findById(courseid);
+            log.info("UniversityServiceImpl.updateCourse - id found");
             Course newCourse = requestToUpdate(request, existCourse.get());
             repository.save(newCourse);
+            log.info("UniversityServiceImpl.updateCourse - Course saved successfully");
             if(newCourse.getCategory() == 1)
                 response.setCategory("JAVA");
             else if(newCourse.getCategory() == 2)
@@ -95,7 +99,7 @@ public class UniversityServiceImpl implements UniversityService {
         if (repository.existsById(id)){
             log.info("UniversityServiceImpl.deleteCourse - id exists");
             repository.deleteById(id);
-            log.info("UniversityServiceImpl.deleteCourse - Course deleted successful");
+            log.info("UniversityServiceImpl.deleteCourse - Course deleted successfully");
         } else{
             log.warn("UniversityServiceImpl.deleteCourse - id not found");
             throw new NotFoundException("Course does not exist, check id and try again","/course/");
