@@ -54,7 +54,8 @@ public class UniversityController {
 
 	@DeleteMapping(value = {"/course/","/course/{id}"})
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<DeleteCourseResponse> deleteOperation(@PathVariable(required = false) String id) {
+	public ResponseEntity<DeleteCourseResponse> deleteOperation(@PathVariable(required = false) String id){
+		log.info("UniversityController.deleteOperation - id received for the delete operation:{}",id);
 		service.deleteCourse(id);
 		log.info("UniversityController.deleteOperation - DELETE operation was successful, deleted id:{}", id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
