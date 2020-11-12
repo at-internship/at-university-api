@@ -34,19 +34,22 @@ public class UniversityServiceImpl implements UniversityService {
     @Override
     public CreateCourseResponse createCourse(CreateCourseRequest request){
         CreateCourseResponse response = new CreateCourseResponse();
-        log.info("Starting POST validations");
+        log.info("UniversityServiceImpl.createCourse - Starting POST validations");
         Validator.requestValidation(request);
-        log.info("POST validations completed");
+        log.info("UniversityServiceImpl.createCourse - POST validations completed");
         Course course = orikaTransformer.transformer(request);
         repository.save(course);
-        log.info("Course saved with id: {}", course.get_id());
+        log.info("UniversityServiceImpl.createCourse - Course saved with id: {}", course.get_id());
         response.setId(course.get_id().toString());
+        log.info("UniversityServiceImpl.createCourse - createCourse operation was successful: {}", response);
         return response;
     }
 
     public List<CourseResponse> getCourses() {
 
+        log.info("UniversityServiceImpl.getCourses - Before getting all the courses");
         List<Course> unchanged = repository.findAll();
+        log.info("UniversityServiceImpl.getCourses - After getting courses: {}", unchanged);
         List<CourseResponse> newList = new ArrayList<>();
 
         for (Course c:unchanged) {
@@ -54,20 +57,25 @@ public class UniversityServiceImpl implements UniversityService {
             courseResponse = orikaTransformer.transformer(c);
             newList.add(courseResponse);
         }
+        log.info("UniversityServiceImpl.getCourses - list of courses transformed: {}", newList);
         if (newList.isEmpty())
             throw new NotFoundException("No courses available, try again later","/course/");
+        log.info("UniversityServiceImpl.getCourses - getCourses operation was successful: {}", newList);
         return newList;
     }
 
     public UpdateCourseResponse updateCourse(UpdateCourseRequest request, String courseid) {
         UpdateCourseResponse response = new UpdateCourseResponse();
-        log.info("Starting PUT validations");
+        log.info("UniversityServiceImpl.updateCourse - Starting PUT validations");
         Validator.requestValidationToUpdate(request,courseid);
-        log.info("PUT validations completed");
+        log.info("UniversityServiceImpl.updateCourse - PUT validations completed");
         if (repository.existsById(courseid)) {
+            log.info("UniversityServiceImpl.updateCourse - id exists");
             Optional<Course> existCourse = repository.findById(courseid);
+            log.info("UniversityServiceImpl.updateCourse - id found");
             Course newCourse = requestToUpdate(request, existCourse.get());
             repository.save(newCourse);
+            log.info("UniversityServiceImpl.updateCourse - Course saved successfully");
             if(newCourse.getCategory() == 1)
                 response.setCategory("JAVA");
             else if(newCourse.getCategory() == 2)
@@ -78,6 +86,7 @@ public class UniversityServiceImpl implements UniversityService {
             response.setDescription(newCourse.getDescription());
             response.setImg(newCourse.getImg());
             response.setStatus(newCourse.getStatus());
+            log.info("UniversityServiceImpl.updateCourse - updateCourse operation was successful: {}", response);
             return response;
         } else
             throw new NotFoundException("Course not found, check id and try again","/course/{id}");
@@ -85,14 +94,14 @@ public class UniversityServiceImpl implements UniversityService {
 
     @Override
     public void deleteCourse(String id) {
-        log.info("id received:{}",id);
+        log.info("UniversityServiceImpl.deleteCourse - id received:{}",id);
         Validator.validationToDelete(id);
         if (repository.existsById(id)){
-            log.info("id exists");
+            log.info("UniversityServiceImpl.deleteCourse - id exists");
             repository.deleteById(id);
-            log.info("id deleted");
+            log.info("UniversityServiceImpl.deleteCourse - Course deleted successfully");
         } else{
-            log.warn("id not found");
+            log.warn("UniversityServiceImpl.deleteCourse - id not found");
             throw new NotFoundException("Course does not exist, check id and try again","/course/");
         }
     }
@@ -118,7 +127,7 @@ public class UniversityServiceImpl implements UniversityService {
         if (Objects.nonNull(request.getStatus()))
             saveCourse.setStatus(request.getStatus());
 
-        log.info("Category conversion successful");
+        log.info("UniversityServiceImpl.requestToUpdate - Category conversion successful");
         return saveCourse;
     }
 
