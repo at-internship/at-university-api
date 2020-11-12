@@ -28,7 +28,7 @@ public class UniversityController {
 	@GetMapping(value = "/course")
 	@ResponseStatus(HttpStatus.OK)
 	public List<CourseResponse> getOperation() {
-		log.info("Calling Get Operation");
+		log.info("UniversityController.getOperation - Calling Get Operation");
 		return service.getCourses();
 	}
 
@@ -36,9 +36,9 @@ public class UniversityController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<CreateCourseResponse> postCourses(
 			@ApiParam(value = "Post course request", required = true) @RequestBody CreateCourseRequest request){
-		log.info("UniversityController.postCourses - operation request {}", request);
+		log.info("UniversityController.postCourses - operation request: {}", request);
 		CreateCourseResponse response=service.createCourse(request);
-		log.info("UniversityController.postCourses - operation response {}", response);
+		log.info("UniversityController.postCourses - POST operation was successful: {}", response);
 		return new ResponseEntity<>(response,HttpStatus.CREATED);
 	}
 
@@ -46,16 +46,18 @@ public class UniversityController {
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<UpdateCourseResponse> putOperation(
 			@RequestBody UpdateCourseRequest request, @PathVariable(required = false) String id) {
+	    log.info("UniversityController.putOperation - operation request: {}, id: {}", request, id);
 		UpdateCourseResponse response = service.updateCourse(request, id);
-		log.info("PUT operation was successful:{}", response);
+		log.info("UniversityController.putOperation - PUT operation was successful: {}", response);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	@DeleteMapping(value = {"/course/","/course/{id}"})
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<DeleteCourseResponse> deleteOperation(@PathVariable(required = false) String id) {
+	public ResponseEntity<DeleteCourseResponse> deleteOperation(@PathVariable(required = false) String id){
+		log.info("UniversityController.deleteOperation - id received for the delete operation:{}",id);
 		service.deleteCourse(id);
-		log.info("DELETE operation was successful, deleted id:{}", id);
+		log.info("UniversityController.deleteOperation - DELETE operation was successful, deleted id:{}", id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
