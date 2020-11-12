@@ -52,7 +52,7 @@ public class UniversityController {
 	}
 
 	@DeleteMapping(value = {"/course/","/course/{id}"})
-	@ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<DeleteCourseResponse> deleteOperation(@PathVariable(required = false) String id) {
 		service.deleteCourse(id);
 		log.info("DELETE operation was successful, deleted id:{}", id);
