@@ -7,6 +7,7 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import static com.google.common.base.Predicates.not;
 
 @Configuration
 @EnableSwagger2
@@ -18,6 +19,7 @@ public class SwaggerConfiguration {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.agilethought.internship.university.controller"))
                 .paths(PathSelectors.any())
+                .paths(not(PathSelectors.regex("/api/v1/course/")))
                 .build();
     }
 }
