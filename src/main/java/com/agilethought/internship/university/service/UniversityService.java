@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface UniversityService {
 
+    List<CourseResponse> getCoursesByTitle(String title);
+
     CreateCourseResponse createCourse(CreateCourseRequest request);
     List<CourseResponse> getCourses();
     UpdateCourseResponse updateCourse(UpdateCourseRequest request, String id);

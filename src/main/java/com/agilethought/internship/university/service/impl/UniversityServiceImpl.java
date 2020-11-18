@@ -32,6 +32,15 @@ public class UniversityServiceImpl implements UniversityService {
     }
 
     @Override
+    public List<CourseResponse> getCoursesByTitle(String title) {
+        log.info("UniversityServiceImpl.getCoursesByTitle - Searching courses by title ");
+        List<CourseResponse> courses = repository.findCoursesByTitle(title);
+        log.info("UniversityServiceImpl.getCoursesByTitle - getCoursesByTitle operation was successfull: {}", courses);
+        return courses;
+    }
+
+
+    @Override
     public CreateCourseResponse createCourse(CreateCourseRequest request){
         CreateCourseResponse response = new CreateCourseResponse();
         log.info("UniversityServiceImpl.createCourse - Starting POST validations");
@@ -63,6 +72,7 @@ public class UniversityServiceImpl implements UniversityService {
         log.info("UniversityServiceImpl.getCourses - getCourses operation was successful: {}", newList);
         return newList;
     }
+
 
     public UpdateCourseResponse updateCourse(UpdateCourseRequest request, String courseid) {
         UpdateCourseResponse response = new UpdateCourseResponse();
