@@ -59,7 +59,7 @@ public class UniversityServiceImplUnitTest {
                 .thenReturn(new CourseResponse());
         Mockito.when(coursesRepository.findAll())
                 .thenReturn(new ArrayList<>(Collections.singletonList(new Course())));
-        List<CourseResponse> result = universityService.getCourses();
+        List<CourseResponse> result = universityService.getCourses(null);
         assertThat(result.get(0)).isEqualToComparingFieldByField(response.get(0));
     }
 

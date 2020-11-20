@@ -8,6 +8,7 @@ import com.agilethought.internship.university.service.UniversityService;
 import com.agilethought.internship.university.service.common.CategoryConstants;
 import com.agilethought.internship.university.service.common.OrikaTransformer;
 import com.agilethought.internship.university.validations.Validator;
+import javafx.scene.transform.NonInvertibleTransformException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +33,6 @@ public class UniversityServiceImpl implements UniversityService {
     }
 
     @Override
-    public List<CourseResponse> getCoursesByTitle(String title) {
-        log.info("UniversityServiceImpl.getCoursesByTitle - Searching courses by title ");
-        List<CourseResponse> courses = repository.findCoursesByTitle(title);
-        log.info("UniversityServiceImpl.getCoursesByTitle - getCoursesByTitle operation was successfull: {}", courses);
-        return courses;
-    }
-
-
-    @Override
     public CreateCourseResponse createCourse(CreateCourseRequest request){
         CreateCourseResponse response = new CreateCourseResponse();
         log.info("UniversityServiceImpl.createCourse - Starting POST validations");
@@ -54,10 +46,18 @@ public class UniversityServiceImpl implements UniversityService {
         return response;
     }
 
-    public List<CourseResponse> getCourses() {
 
+    public List<CourseResponse> getCourses(String title) {
+
+        List<Course> unchanged;
         log.info("UniversityServiceImpl.getCourses - Before getting all the courses");
-        List<Course> unchanged = repository.findAll();
+        if(StringUtils.isNotBlank(title)){
+            unchanged= repository.findCoursesByTitle(title);
+        }else {
+            unchanged= repository.findAll();
+            if(unchanged.isEmpty())
+                throw new NotFoundException("No courses available, try again later", "/course/");
+        }
         log.info("UniversityServiceImpl.getCourses - After getting courses: {}", unchanged);
         List<CourseResponse> newList = new ArrayList<>();
 
