@@ -46,10 +46,10 @@ public class UniversityControllerUnitTest {
     }
 
     @Test
-    public void testGetSuccessful() throws Exception {
+    public void testGetSuccessful(String title) throws Exception {
         List<CourseResponse> response = new ArrayList<>();
-        Mockito.when(universityService.getCourses()).thenReturn(UniversityDummy.getListCourseResponseEmpty());
-        List<CourseResponse> result = universityController.getOperation();
+        Mockito.when(universityService.getCourses(title)).thenReturn(UniversityDummy.getListCourseResponseEmpty());
+        List<CourseResponse> result = universityController.getOperation(null);
         assertThat(result).isEqualTo(response);
     }
 

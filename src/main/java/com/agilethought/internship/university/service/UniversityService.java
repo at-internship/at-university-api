@@ -7,7 +7,8 @@ import java.util.List;
 public interface UniversityService {
 
     CreateCourseResponse createCourse(CreateCourseRequest request);
-    List<CourseResponse> getCourses();
+    List<CourseResponse> getCourses(String title);
     UpdateCourseResponse updateCourse(UpdateCourseRequest request, String id);
     void deleteCourse(String id);
+
 }

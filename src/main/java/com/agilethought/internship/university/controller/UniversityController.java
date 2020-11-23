@@ -27,9 +27,9 @@ public class UniversityController {
 
 	@GetMapping(value = "/course")
 	@ResponseStatus(HttpStatus.OK)
-	public List<CourseResponse> getOperation() {
+	public List<CourseResponse> getOperation(@RequestParam(value = "title", required = false) String title) {
 		log.info("UniversityController.getOperation - Calling Get Operation");
-		return service.getCourses();
+		return service.getCourses(title);
 	}
 
 	@PostMapping(value ="/course")

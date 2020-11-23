@@ -45,10 +45,17 @@ public class UniversityServiceImpl implements UniversityService {
         return response;
     }
 
-    public List<CourseResponse> getCourses() {
+    public List<CourseResponse> getCourses(String title) {
 
+        List<Course> unchanged;
         log.info("UniversityServiceImpl.getCourses - Before getting all the courses");
-        List<Course> unchanged = repository.findAll();
+        if(StringUtils.isNotBlank(title)){
+            unchanged= repository.findCoursesByTitle(title);
+        }else{
+            unchanged= repository.findAll();
+            if(unchanged.isEmpty())
+                throw new NotFoundException("No courses available, try again later", "/course/");
+        }
         log.info("UniversityServiceImpl.getCourses - After getting courses: {}", unchanged);
         List<CourseResponse> newList = new ArrayList<>();
 

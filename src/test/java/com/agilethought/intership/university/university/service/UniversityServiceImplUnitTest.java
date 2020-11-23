@@ -52,14 +52,14 @@ public class UniversityServiceImplUnitTest {
     }
 
     @Test
-    public void getCourseServiceSuccessful() throws Exception{
+    public void getCourseServiceSuccessful(String title) throws Exception{
 
         List<CourseResponse> response = Collections.singletonList(new CourseResponse());
         Mockito.when(orikaTransformer.transformer(Mockito.any(Course.class)))
                 .thenReturn(new CourseResponse());
         Mockito.when(coursesRepository.findAll())
                 .thenReturn(new ArrayList<>(Collections.singletonList(new Course())));
-        List<CourseResponse> result = universityService.getCourses();
+        List<CourseResponse> result = universityService.getCourses(title);
         assertThat(result.get(0)).isEqualToComparingFieldByField(response.get(0));
     }
 
