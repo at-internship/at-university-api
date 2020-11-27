@@ -1,4 +1,4 @@
-package com.agilethought.intership.university.university;
+package com.agilethought.internship.university;
 
 import com.agilethought.internship.university.domain.*;
 import com.agilethought.internship.university.model.Course;

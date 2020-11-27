@@ -1,4 +1,4 @@
-package com.agilethought.intership.university.university;
+package com.agilethought.internship.university;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

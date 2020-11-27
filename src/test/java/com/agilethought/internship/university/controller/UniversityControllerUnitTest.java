@@ -1,7 +1,6 @@
-package com.agilethought.intership.university.university.controller;
+package com.agilethought.internship.university.controller;
 
-import com.agilethought.intership.university.university.UniversityDummy;
-import com.agilethought.internship.university.controller.UniversityController;
+import com.agilethought.internship.university.UniversityDummy;
 import com.agilethought.internship.university.domain.*;
 import com.agilethought.internship.university.service.UniversityService;
 import org.junit.Before;

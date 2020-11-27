@@ -1,7 +1,7 @@
-package com.agilethought.intership.university.university.service;
+package com.agilethought.internship.university.service;
 
 import com.agilethought.internship.university.validations.Validator;
-import com.agilethought.intership.university.university.UniversityDummy;
+import com.agilethought.internship.university.UniversityDummy;
 import com.agilethought.internship.university.domain.*;
 import com.agilethought.internship.university.model.Course;
 import com.agilethought.internship.university.repository.CoursesRepository;
