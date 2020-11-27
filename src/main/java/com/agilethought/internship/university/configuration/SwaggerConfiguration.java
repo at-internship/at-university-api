@@ -20,6 +20,7 @@ public class SwaggerConfiguration {
                 .apis(RequestHandlerSelectors.basePackage("com.agilethought.internship.university.controller"))
                 .paths(PathSelectors.any())
                 .paths(not(PathSelectors.regex("/api/v1/course/")))
-                .build();
+                .build()
+                .useDefaultResponseMessages(false);
     }
 }

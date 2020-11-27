@@ -32,6 +32,7 @@ public class UniversityController {
 	@GetMapping(value = "/course")
 	@ResponseStatus(HttpStatus.OK)
 	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK", response = CourseResponse[].class),
 			@ApiResponse(code = 404, message = "NOT_FOUND", response = NotFoundException.class)
 	})
 	public List<CourseResponse> getOperation() {
@@ -42,8 +43,8 @@ public class UniversityController {
 	@PostMapping(value ="/course")
 	@ResponseStatus(HttpStatus.CREATED)
 	@ApiResponses(value = {
-			@ApiResponse(code = 400, message = "BAD_REQUEST", response = BadRequestException.class),
-			@ApiResponse(code = 404, message = "NOT_FOUND", response = NotFoundException.class)
+			@ApiResponse(code = 201, message= "CREATED", response = CreateCourseResponse.class),
+			@ApiResponse(code = 400, message = "BAD_REQUEST", response = BadRequestException.class)
 	})
 	public ResponseEntity<CreateCourseResponse> postCourses(
 			@ApiParam(value = "Post course request", required = true) @RequestBody CreateCourseRequest request){
@@ -56,6 +57,7 @@ public class UniversityController {
 	@PutMapping(value = {"/course/","/course/{id}"})
 	@ResponseStatus(HttpStatus.OK)
 	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK", response = UpdateCourseResponse.class),
 			@ApiResponse(code = 400, message = "BAD_REQUEST", response = BadRequestException.class),
 			@ApiResponse(code = 404, message = "NOT_FOUND", response = NotFoundException.class)
 	})
@@ -70,6 +72,7 @@ public class UniversityController {
 	@DeleteMapping(value = {"/course/","/course/{id}"})
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@ApiResponses(value = {
+			@ApiResponse(code= 204, message = "NO_CONTENT"),
 			@ApiResponse(code = 400, message = "BAD_REQUEST", response = BadRequestException.class),
 			@ApiResponse(code = 404, message = "NOT_FOUND", response = NotFoundException.class)
 	})

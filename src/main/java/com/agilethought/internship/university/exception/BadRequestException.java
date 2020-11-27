@@ -19,4 +19,5 @@ public class BadRequestException extends RuntimeException{
         this.setError(HttpStatus.BAD_REQUEST);
         this.setStatus(400);
     }
+
 }
