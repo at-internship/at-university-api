@@ -24,3 +24,4 @@ public class CreateCourseRequest {
     private Integer status;
 
 }
+

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
+
 public class BadRequestException extends RuntimeException{
 
     private String message;
@@ -19,4 +20,6 @@ public class BadRequestException extends RuntimeException{
         this.setError(HttpStatus.BAD_REQUEST);
         this.setStatus(400);
     }
+
 }
+
