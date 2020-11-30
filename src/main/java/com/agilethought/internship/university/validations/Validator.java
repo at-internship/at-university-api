@@ -27,7 +27,7 @@ public class Validator {
         if(Objects.isNull(request.getStatus()))
             throw new BadRequestException("Status field is required", "/course/");
         log.debug("Status field validation successful");
-        if(request.getStatus()>=2)
+        if((request.getStatus()!=0) && (request.getStatus()!=1))
             throw new BadRequestException("Bad status value", "/course/");
         log.debug("Category field create content validation successful");
     }
@@ -38,7 +38,7 @@ public class Validator {
         if (!CategoryConstants.getCategoryNames().contains(request.getCategory().toUpperCase()))
             throw new BadRequestException("Incorrect category value", "/course/");
         log.debug("Category field update content validation successful");
-        if(request.getStatus()>=2)
+        if((request.getStatus()!=0) && (request.getStatus()!=1))
             throw new BadRequestException("Bad status value", "/course/");
         log.debug("Category field update content validation successful");
     }

@@ -1,5 +1,7 @@
 package com.agilethought.internship.university.exception;
 
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiResponses;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
