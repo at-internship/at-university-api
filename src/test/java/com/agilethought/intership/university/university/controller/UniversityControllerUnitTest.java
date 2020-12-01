@@ -67,4 +67,13 @@ public class UniversityControllerUnitTest {
         assertThat(result.getBody()).isEqualToComparingFieldByField(response.getBody());
     }
 
+    @Test
+    public void testDeleteSuccessful() throws Exception{
+        ResponseEntity<DeleteCourseResponse> response = new ResponseEntity<>(
+                HttpStatus.NO_CONTENT);
+
+        ResponseEntity<DeleteCourseResponse> result = universityController.deleteOperation(UniversityDummy.getPathVariableId());
+        assertThat(result).isEqualTo(response);
+    }
+
 }

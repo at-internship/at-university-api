@@ -1,5 +1,6 @@
 package com.agilethought.intership.university.university.service;
 
+import com.agilethought.internship.university.exception.NotFoundException;
 import com.agilethought.internship.university.validations.Validator;
 import com.agilethought.intership.university.university.UniversityDummy;
 import com.agilethought.internship.university.domain.*;
@@ -13,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.*;
 
@@ -86,6 +88,12 @@ public class UniversityServiceImplUnitTest {
         Course result = universityService.requestToUpdate(
                 UniversityDummy.getPutChartNoteRequest(), new Course());
         assertThat(result).isEqualToComparingFieldByField(response);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void deleteCourseToRequestServiceSuccessful() throws Exception{
+        universityService.deleteCourse("125678k25");
+        assertNotNull(universityService);
     }
 
 }
