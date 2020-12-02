@@ -132,6 +132,14 @@
 			<groupId>org.jacoco</groupId>
 			<artifactId>jacoco-maven-plugin</artifactId>
 			<version>0.8.5</version>
+				<configuration>
+					<excludes>
+						<exclude>com/agilethought/internship/university/domain/**/*</exclude>
+						<exclude>com/agilethought/internship/university/configuration/**/*</exclude>
+						<exclude>com/agilethought/internship/university/exception/**/*</exclude>
+						<exclude>com/agilethought/internship/university/model/**/*</exclude>
+					</excludes>
+				</configuration>
 			<executions>
 			<execution>
 				<id>default-prepare-agent</id>
