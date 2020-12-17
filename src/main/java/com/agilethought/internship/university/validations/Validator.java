@@ -24,6 +24,9 @@ public class Validator {
         if(StringUtils.isBlank(request.getTitle()))
             throw new BadRequestException("Title field is required", "/course/");
         log.debug("Title field validation successful");
+        if(StringUtils.isBlank(request.getDescription()))
+            throw new BadRequestException("Description field is required", "/course/");
+        log.debug("Description field validation successful");
         if(Objects.isNull(request.getStatus()))
             throw new BadRequestException("Status field is required", "/course/");
         log.debug("Status field validation successful");
@@ -38,6 +41,10 @@ public class Validator {
         if (!CategoryConstants.getCategoryNames().contains(request.getCategory().toUpperCase()))
             throw new BadRequestException("Incorrect category value", "/course/");
         log.debug("Category field update content validation successful");
+        if(StringUtils.isBlank(request.getTitle()))
+            throw new BadRequestException("Title field is required to update", "/course/");
+        if(StringUtils.isBlank(request.getDescription()))
+            throw new BadRequestException("Description field is required to update", "/course/");
         if((request.getStatus()!=0) && (request.getStatus()!=1))
             throw new BadRequestException("Bad status value", "/course/");
         log.debug("Category field update content validation successful");
